@@ -11,7 +11,6 @@ function Home(props) {
       .then((response) => JSON.parse(response))
       .then(setUserData);
   }, []);
-  console.log(userData);
   return (
     <div style={{ display: "flex", justifyContent: "center", margin: "10%" }}>
       <Table striped>

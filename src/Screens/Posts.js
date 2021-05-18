@@ -1,4 +1,12 @@
-import { Button, Card, CardText, CardTitle, Col, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardText,
+  CardTitle,
+  Col,
+  Row,
+  Spinner,
+} from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
@@ -15,10 +23,9 @@ function Posts(props) {
         .then(setPosts);
   }, []); //fetch posts for a user
 
-  console.log(postData);
   return (
     <>
-      {postData &&
+      {postData ? (
         postData.map((postData) => (
           <Row>
             <Col md="3"></Col>
@@ -28,7 +35,7 @@ function Posts(props) {
                 <CardText>{postData.body}</CardText>
                 <Button color="primary">
                   <Link
-                    to={`/details?postId${postData.id}`}
+                    to={`/details?postId=${postData.id}&userId=${postData.userId}`}
                     style={{
                       textDecoration: "none",
                       color: "white",
@@ -42,7 +49,10 @@ function Posts(props) {
             </Col>
             <Col md="3"></Col>
           </Row>
-        ))}
+        ))
+      ) : (
+        <Spinner size="xl">{""}</Spinner>
+      )}
     </>
   );
 }
