@@ -31,7 +31,10 @@ function Home(props) {
                 <td>{user.name}</td>
                 <td>{user.company.name}</td>
                 <td>
-                  <Link to={`posts/${user.id}`}> Posts from {user.name}</Link>
+                  <Link to={`posts?userId=${user.id}`}>
+                    {" "}
+                    Posts from {user.name}
+                  </Link>
                 </td>
               </tr>
             ))}
