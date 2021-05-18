@@ -1,22 +1,43 @@
-import React from "react";
-import logo from "../logo.svg";
+import { Col, Table } from "reactstrap";
+import React, { useEffect, useState } from "react";
+
+import { Link } from "react-router-dom";
 
 function Home(props) {
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((buffer) => buffer.text())
+      .then((response) => JSON.parse(response))
+      .then(setUserData);
+  }, []);
+  console.log(userData);
   return (
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
+    <div style={{ display: "flex", justifyContent: "center", margin: "10%" }}>
+      <Table striped>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Blog Posts</th>
+          </tr>
+        </thead>
+        <tbody>
+          {userData &&
+            userData.map((user, i) => (
+              <tr scope="row">
+                <th>{i + 1}</th>
+                <td>{user.name}</td>
+                <td>{user.company.name}</td>
+                <td>
+                  <Link to={`posts/${user.id}`}> Posts from {user.name}</Link>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </Table>
+    </div>
   );
 }
 
